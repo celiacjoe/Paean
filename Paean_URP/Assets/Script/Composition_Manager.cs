@@ -141,13 +141,13 @@ public class Composition_Manager : MonoBehaviour
     {
         int R; R = Random.Range(0, 3);
         if (R == 0){
-            ABLandscape.transform.position = new Vector3(0, 0.27f, -3);
+            ABLandscape.transform.position = new Vector3(ABLandscape.transform.position.x, 0.27f, ABLandscape.transform.position.z);
             ABLandscape.SetActive(true);
         }else if (R == 1){
-            ABLandscape.transform.position = new Vector3(0, -0.27f, -3);
+            ABLandscape.transform.position = new Vector3(ABLandscape.transform.position.x, -0.27f, ABLandscape.transform.position.z);
             ABLandscape.SetActive(true);
         }else if (R == 2){
-            ABLandscape.transform.position = new Vector3(0, 0, -3);
+            ABLandscape.transform.position = new Vector3(ABLandscape.transform.position.x, 0, ABLandscape.transform.position.z);
             ABLandscape.SetActive(true);
         }
     }

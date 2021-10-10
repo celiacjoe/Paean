@@ -7,7 +7,9 @@ public class Render_Manager : MonoBehaviour
 
     public Composition_Manager Compo;
     public Cam_Manager Cam;
+    public Scene_Manager Scene;
 
+    public int Intensity;
 
     void Start()
     {
@@ -19,7 +21,6 @@ public class Render_Manager : MonoBehaviour
     {
         if (Input.GetKeyDown("a")) /////// Full Landscape
         {
-            //Compo.CleanA();
             Compo.SetupFullLandscape();
         }
         if (Input.GetKeyDown("z")) /////// Screen A full
@@ -35,12 +36,10 @@ public class Render_Manager : MonoBehaviour
         }
         if (Input.GetKeyDown("r"))  /////// Landscape
         {
-            Compo.CleanA();
             Compo.SetupLandscape();
         }
         if (Input.GetKeyDown("t")) /////// Cross Landscape
         {
-            Compo.CleanA();
             Compo.SetupCrossLandscape();
         }
         if (Input.GetKeyDown("y")) /////// Vertical fragmentation A
@@ -56,8 +55,7 @@ public class Render_Manager : MonoBehaviour
             Compo.SetupFragmentation();
         }
         if (Input.GetKeyDown("o")) /////// Total Fragmentation
-        {
-            Compo.CleanA();
+        {          
             Compo.SetupTotalFragmentation();
         }
 
@@ -70,11 +68,23 @@ public class Render_Manager : MonoBehaviour
         {
             Cam.SetCamOrthoB();
         }
+        if (Input.GetKeyDown("d")) /////// Cam random set translation
+        {
+            Intensity++;
+            Cam.CamTranslation();
+        }
+
+        if (Input.GetKeyDown("w")) /////// TEXT PAEAN
+        {
+            Scene.TextPaeanApparition();
+        }
+
 
 
 
         if (Input.GetKeyDown("space"))  /////// Just Clean
         {
+            Intensity = 0;
             Compo.CleanA();
         }
     }
