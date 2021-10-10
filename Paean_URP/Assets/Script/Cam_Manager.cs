@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Cam_Manager : MonoBehaviour
 {
-    public Render_Manager Render;
     public float RandomSpeed;
     public bool Cam_Translation;
     public Animator AC_Cam;
@@ -23,44 +22,28 @@ public class Cam_Manager : MonoBehaviour
     void Update()
     {
         
-        if (Cam_Translation == true)
-        {
-            B0[1].transform.Translate(0, RandomSpeed * Time.deltaTime, 0);
-            A0[1].transform.Translate(0, RandomSpeed * Time.deltaTime, 0);
-        }
     }
 
     public void CamTranslation()
-    {      
-
-        if (Render.Intensity == 1){
-            RandomSpeed = Random.Range(1f, 3f);
-            AC_Cam.speed = RandomSpeed;
-            AC_Cam.SetBool("Animate", true);
-        }else if (Render.Intensity == 2){
-            RandomSpeed = Random.Range(2f, 5f);
-            AC_Cam.speed = RandomSpeed;
-            AC_Cam.SetBool("Animate", false);
-            AC_Cam.SetBool("Crossed", true);
-        }else if (Render.Intensity == 3){
-            RandomSpeed = Random.Range(3f, 7f);
-            AC_Cam.SetBool("Crossed", false);
-            AC_Cam.SetBool("Melt", true);
-        }else if(Render.Intensity > 3){
-            Debug.Log("StopAnim");
-            AC_Cam.SetBool("Melt", false);
-        }
-
-        /*if (Cam_Translation)
-        {
-            B0[1].transform.transform.position = new Vector3(0, 0, 0);
-            A0[1].transform.transform.position = new Vector3(0, 0, 0);
-            Cam_Translation = false;
-        }else
-        {
-            Cam_Translation = true;
-        }*/
-
+    {
+        RandomSpeed = Random.Range(1f, 3f);
+        AC_Cam.speed = RandomSpeed;
+        AC_Cam.SetBool("Melt", false);
+        AC_Cam.SetBool("Crossed", false);
+        AC_Cam.SetBool("Animate", true);
+    }
+    public void CamTranslationCrossed()
+    {
+        RandomSpeed = Random.Range(2f, 5f);
+        AC_Cam.speed = RandomSpeed;
+        AC_Cam.SetBool("Animate", false);
+        AC_Cam.SetBool("Crossed", true);
+    }
+    public void CamTranslationMelt()
+    {
+        RandomSpeed = Random.Range(3f, 7f);
+        AC_Cam.SetBool("Crossed", false);
+        AC_Cam.SetBool("Melt", true);
     }
 
     public void SetCamOrthoA()
@@ -88,5 +71,20 @@ public class Cam_Manager : MonoBehaviour
             B0_0[0].orthographic = false;   B0_0[1].orthographic = false;   B0_0[2].orthographic = false;   B0_0[3].orthographic = false;   B0_0[4].orthographic = false;   B0_0[5].orthographic = false;
             //B.orthographicSize = 5.0f;
         }
+    }
+
+   /* public void SwitchLayerMask()
+    {
+        int layer1 = LayerMask.NameToLayer("MyLayer1");
+        int layer2 = LayerMask.NameToLayer("MyLayer2");
+
+        cam.cullingMask = (1 << layer1) | (1 << layer2);
+    }*/
+
+    public void ResetAll()
+    {
+        AC_Cam.SetBool("Animate", false);
+        AC_Cam.SetBool("Melt", false);
+        AC_Cam.SetBool("Crossed", false);
     }
 }

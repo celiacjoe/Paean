@@ -792,6 +792,7 @@ MonoBehaviour:
   texture0: {fileID: 2800000, guid: 364c424e6bc55b64d8ce267f2b4f31e8, type: 3}
   texture1: {fileID: 2800000, guid: ab99eb6183f8c2248bc1dd521cb4bddf, type: 3}
   probe: {fileID: 1891939092}
+  liquide: 0
 --- !u!23 &282253500
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1029,6 +1030,101 @@ Transform:
   - {fileID: 1989526744}
   m_Father: {fileID: 1576913611}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &391452034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391452038}
+  - component: {fileID: 391452037}
+  - component: {fileID: 391452036}
+  - component: {fileID: 391452035}
+  m_Layer: 8
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &391452035
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391452034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &391452036
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391452034}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 96660911f9008d242a9fb997e4c19a34, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &391452037
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391452034}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &391452038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391452034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.45, y: 0.34, z: 2.73}
+  m_LocalScale: {x: 2.2415, y: 2.2415, z: 2.2415}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &457944092
 GameObject:
@@ -3035,7 +3131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21d2097283c75746a11bf8e16d3ce72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Render: {fileID: 1207699340}
   RandomSpeed: 0
   Cam_Translation: 0
   AC_Cam: {fileID: 1105741611}
@@ -3242,7 +3337,10 @@ MonoBehaviour:
   Compo: {fileID: 1576913612}
   Cam: {fileID: 1105741610}
   Scene: {fileID: 579151959}
-  Intensity: 0
+  AssignScene: 0
+  TranslationIntensity: 0
+  LandscapeIntensity: 0
+  FragmentationIntensity: 0
 --- !u!4 &1207699341
 Transform:
   m_ObjectHideFlags: 0
@@ -3931,7 +4029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21d2097283c75746a11bf8e16d3ce72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Render: {fileID: 0}
   RandomSpeed: 0
   Cam_Translation: 0
   AC_Cam: {fileID: 0}
@@ -4983,6 +5080,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdebd484d27ce844b4f84f2a0a13ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CM: {fileID: 1105741610}
+  LayerNameToAssign: Water01
   ABLandscape: {fileID: 986628875}
   A: {fileID: 1368100242}
   A0:
@@ -5008,6 +5107,7 @@ MonoBehaviour:
   - {fileID: 2014723096}
   - {fileID: 2143371927}
   - {fileID: 476306286}
+  AssignScene: 0
   i: 0
 --- !u!1 &1599359964
 GameObject:

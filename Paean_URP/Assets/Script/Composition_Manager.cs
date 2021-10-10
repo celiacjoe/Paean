@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Composition_Manager : MonoBehaviour
 {
+    public Cam_Manager CM;
+    public string LayerNameToAssign;
     public GameObject ABLandscape;
 
     public GameObject A;
@@ -16,32 +18,54 @@ public class Composition_Manager : MonoBehaviour
     public GameObject[] B1_0;
     public GameObject[] B2_0;
 
+    public bool AssignScene;
+
     public int i;
 
     void Start()
     {
+        AssignScene = false;
         i = 0;
         CleanA();
     }
 
     void Update()
     {
-        
+        if (AssignScene == true)
+        {
+            CM.A.cullingMask = LayerMask.GetMask(LayerNameToAssign);
+        }
     }
 
     /////////////////////////////////////////FRAGMENTATION
     public void SetupTotalFragmentation()
     {
         int R; R = Random.Range(0, 3);
-        if (R == 0){
-            A1_0[0].SetActive(true);    A1_0[2].SetActive(true);    B1_0[1].SetActive(true);
-            A2_0[1].SetActive(true);    B2_0[0].SetActive(true);    B2_0[2].SetActive(true);
-        }else if (R == 1){
-            A2_0[0].SetActive(true);    A2_0[2].SetActive(true);   B2_0[1].SetActive(true);
-            A1_0[1].SetActive(true);    B1_0[0].SetActive(true);   B1_0[2].SetActive(true);
+        if (AssignScene == false)
+        {
+            if (R == 0){
+                A1_0[0].SetActive(true); A1_0[2].SetActive(true); B1_0[1].SetActive(true);
+                A2_0[1].SetActive(true); B2_0[0].SetActive(true); B2_0[2].SetActive(true);
+            }
+            else if (R == 1){
+                A2_0[0].SetActive(true); A2_0[2].SetActive(true); B2_0[1].SetActive(true);
+                A1_0[1].SetActive(true); B1_0[0].SetActive(true); B1_0[2].SetActive(true);
+            }else
+            {
+                A1_0[1].SetActive(true); B1_0[1].SetActive(true);
+                A2_0[2].SetActive(true); B2_0[0].SetActive(true);
+            }
         }else{
-            A1_0[1].SetActive(true);    B1_0[1].SetActive(true);
-            A2_0[2].SetActive(true);    B2_0[0].SetActive(true);
+            if (R == 0){
+                //CM.A1_0[2].CM.A.cullingMask = LayerMask.GetMask(LayerNameToAssign); ; B1_0[1].SetActive(true);
+                A2_0[1].SetActive(true); B2_0[0].SetActive(true); B2_0[2].SetActive(true);
+            }else if (R == 1){
+                A2_0[0].SetActive(true); A2_0[2].SetActive(true); B2_0[1].SetActive(true);
+                A1_0[1].SetActive(true); B1_0[0].SetActive(true); B1_0[2].SetActive(true);
+            }else{
+                A1_0[1].SetActive(true); B1_0[1].SetActive(true);
+                A2_0[2].SetActive(true); B2_0[0].SetActive(true);
+            }
         }
     }
 
@@ -57,8 +81,7 @@ public class Composition_Manager : MonoBehaviour
         }else if (R == 2){
             A2_0[2].SetActive(true);
         }else{
-            A1_0[1].SetActive(true);    B1_0[1].SetActive(true);
-            A2_0[0].SetActive(true);    A2_0[2].SetActive(true);    B2_0[2].SetActive(true);
+            A2_0[0].SetActive(true);  A2_0[2].SetActive(true);    B1_0[2].SetActive(true);
         }
     }
 
@@ -71,8 +94,7 @@ public class Composition_Manager : MonoBehaviour
         }else if (R == 1){
             A1_0[0].SetActive(true);    A1_0[2].SetActive(true);
             A2_0[0].SetActive(true);    A2_0[2].SetActive(true);
-        }
-        else{
+        }else{
             A1_0[2].SetActive(true);
             A2_0[2].SetActive(true);
         }
@@ -94,7 +116,8 @@ public class Composition_Manager : MonoBehaviour
             B2_0[0].SetActive(true);
         }
     }
-    /////////////////////////////////////////Screen Square
+
+    /////////////////////////////////////////Screen total A or B
     public void ScreenA()
     {
         A.SetActive(true);

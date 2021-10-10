@@ -9,83 +9,122 @@ public class Render_Manager : MonoBehaviour
     public Cam_Manager Cam;
     public Scene_Manager Scene;
 
-    public int Intensity;
+    public bool AssignScene;
+
+    public int TranslationIntensity;
+    public int LandscapeIntensity;
+    public int FragmentationIntensity;
 
     void Start()
     {
-
+        AssignScene = false;
+        FragmentationIntensity = 0;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown("a")) /////// Full Landscape
+        if (AssignScene == true)
         {
-            Compo.SetupFullLandscape();
+
         }
-        if (Input.GetKeyDown("z")) /////// Screen A full
+        if (Input.GetKeyDown("a")) /////// Screen A full
         {
             Compo.CleanA();
             Compo.ScreenA();
         }
 
-        if (Input.GetKeyDown("e"))  /////// Screen B full
+        if (Input.GetKeyDown("p"))  /////// Screen B full
         {
             Compo.CleanA();
             Compo.ScreenB();
         }
-        if (Input.GetKeyDown("r"))  /////// Landscape
-        {
-            Compo.SetupLandscape();
-        }
-        if (Input.GetKeyDown("t")) /////// Cross Landscape
-        {
-            Compo.SetupCrossLandscape();
-        }
-        if (Input.GetKeyDown("y")) /////// Vertical fragmentation A
+       
+        if (Input.GetKeyDown("z")) /////// Vertical fragmentation A
         {
             Compo.SetupVerticalFragmentationA();
         }
-        if (Input.GetKeyDown("u")) /////// Vertical fragmentation B
+        if (Input.GetKeyDown("o")) /////// Vertical fragmentation B
         {
             Compo.SetupVerticalFragmentationB();
         }
-        if (Input.GetKeyDown("i")) /////// fragmentation AB
+        if (Input.GetKeyDown("m")) /////// fragmentation AB
         {
-            Compo.SetupFragmentation();
-        }
-        if (Input.GetKeyDown("o")) /////// Total Fragmentation
-        {          
-            Compo.SetupTotalFragmentation();
+            FragmentationIntensity++;
+            if (FragmentationIntensity == 1){
+                Compo.SetupFragmentation();                    // Simple Fragmentation 
+            }else if (FragmentationIntensity == 2){
+                Compo.SetupFragmentation();            
+            }else if (FragmentationIntensity == 3){
+                Clean();
+                Compo.SetupTotalFragmentation();              // TotalFragmentation
+            }
         }
 
-        if (Input.GetKeyDown("q")) /////// Cam Ortho A
+        if (Input.GetKeyDown("q")) /////// Full Landscape
+        {
+            Compo.SetupFullLandscape();
+        }
+
+        if (Input.GetKeyDown("s"))  /////// Landscape
+        {
+            LandscapeIntensity++;
+            if (LandscapeIntensity == 1){
+                Compo.SetupLandscape();
+            }else if (LandscapeIntensity == 2){
+                Compo.SetupLandscape();
+            }else if (LandscapeIntensity == 3){
+                Clean();
+                Compo.SetupCrossLandscape();    // Cross Landscape
+            }
+        }
+
+        if (Input.GetKeyDown("y")) /////// Cam Ortho A
         {
             Cam.SetCamOrthoA();
         }
-
-        if (Input.GetKeyDown("s")) /////// Cam Ortho B
+        if (Input.GetKeyDown("u")) /////// Cam Ortho B
         {
             Cam.SetCamOrthoB();
         }
-        if (Input.GetKeyDown("d")) /////// Cam random set translation
+        if (Input.GetKeyDown("w")) /////// Cam random set translation
         {
-            Intensity++;
-            Cam.CamTranslation();
+            TranslationIntensity++;
+            if (TranslationIntensity == 1){
+               Cam.CamTranslation();                     // Simple Translation
+            }else if (TranslationIntensity == 2){
+                Cam.CamTranslationCrossed();             // Crossed Translation
+            }else if (TranslationIntensity == 3){
+                Cam.CamTranslationMelt();               // Melted Translation
+            }else{
+                Clean();
+            }
         }
 
-        if (Input.GetKeyDown("w")) /////// TEXT PAEAN
+        if (Input.GetKeyDown("t")) /////// TEXT PAEAN
         {
             Scene.TextPaeanApparition();
         }
 
-
-
+        if (Input.GetKeyDown("enter"))  /////// Just Clean
+        {
+            AssignScene = true;
+        }
 
         if (Input.GetKeyDown("space"))  /////// Just Clean
         {
-            Intensity = 0;
-            Compo.CleanA();
+            Clean();
         }
+
     }
+
+    void Clean()
+    {
+        TranslationIntensity = 0;
+        Compo.CleanA();
+        Cam.ResetAll();
+        LandscapeIntensity = 0;
+        FragmentationIntensity = 0;
+    }
+
 }
