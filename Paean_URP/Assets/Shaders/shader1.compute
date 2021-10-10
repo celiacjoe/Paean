@@ -6,6 +6,7 @@ Texture2D<float4> texture1;
 TextureCube<float4> ref;
 SamplerState _LinearRepeat;
 float _time;
+float liquide;
 int _rx;
 int _ry;
 
@@ -21,11 +22,17 @@ float no(float2 p) {
 }
 
 float2x2 rot(float r) { float c = cos(r); float s = sin(r); return float2x2(c, s, -s, c); }
+float lo;
 float map(float3 p) {
 	float d1 = 1000.;
+	float bi = frac(_time*0.1)*100. + liquide * 20.-5.;
+	float li = smoothstep(bi,bi+1., p.z+no(p.x*2.+_time*5.));
 	if (p.y < 5.) {
-		d1 = dot(p, float3(0., 1., 0.)) + texture1.SampleLevel(_LinearRepeat, p.xz*0.01,0).x*10. + texture1.SampleLevel(_LinearRepeat, p.xz*0.1, 0).x;
+		d1 = dot(p, float3(0., 1., 0.)) + (texture1.SampleLevel(_LinearRepeat, p.xz*0.01,0. ).x*10.
+			+ texture1.SampleLevel(_LinearRepeat, p.xz*0.1, 0.).x)*li+lerp(no(p.xz*float2(6.,1.5)
+				+float2(_time*0.2,_time*4.))*0.25+ no(p.xz*float2(6., 1.5) + float2(-_time*0.2,- _time*4.))*0.25 +0.25,0.,li);
 	}
+	lo = li;
 	return d1;
 }
 float3 nor(float3 p) { float2 e = float2(0.0001, 0.); return normalize(map(p) - float3(map(p - e.xyy), map(p - e.yxy), map(p - e.yyx))); }
@@ -46,7 +53,7 @@ void CSMain (uint2 id : SV_DispatchThreadID)
 
 		float d = map(p);
 		if (dd > dm) { dd = dm; break; }
-		if (d < 0.00) { break; }
+		if (d < 0.001) { break; }
 		p += r * d;
 		dd += d;
 	}
@@ -61,7 +68,8 @@ void CSMain (uint2 id : SV_DispatchThreadID)
 	float ao = clamp(map(p + n * dao) / dao, 0., 1.);
 	fres *= ao;
 	float r1 = smoothstep(-0.05,0.8,sqrt(fres));
-	float3 r2 = ref.SampleLevel(_LinearRepeat, n, 0).xyz;
-	reader[id] = float4(max(r2,float3(r1,r1,r1)),1.);
+	float r2 = lerp(pow(1.-ld,5.)*0.2+ pow(1. - ld, 10.)*0.5+pow(ld, 200.)*0.25, r1, lo);
+	float3 r3 = ref.SampleLevel(_LinearRepeat, n, 0).xyz;
+	reader[id] = float4(r3+r2,1.);
 
 }
