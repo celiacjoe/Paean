@@ -24,10 +24,7 @@ public class Render_Manager : MonoBehaviour
 
     void Update()
     {
-        if (AssignScene == true)
-        {
 
-        }
         if (Input.GetKeyDown("a")) /////// Screen A full
         {
             Compo.CleanA();
@@ -50,15 +47,16 @@ public class Render_Manager : MonoBehaviour
         }
         if (Input.GetKeyDown("m")) /////// fragmentation AB
         {
-            FragmentationIntensity++;
-            if (FragmentationIntensity == 1){
-                Compo.SetupFragmentation();                    // Simple Fragmentation 
-            }else if (FragmentationIntensity == 2){
-                Compo.SetupFragmentation();            
-            }else if (FragmentationIntensity == 3){
-                Clean();
-                Compo.SetupTotalFragmentation();              // TotalFragmentation
-            }
+              FragmentationIntensity++;
+              if (FragmentationIntensity == 1){
+                  Compo.SetupFragmentation();                    // Simple Fragmentation 
+              }else if (FragmentationIntensity == 2){
+                  Compo.SetupFragmentation();            
+              }else if (FragmentationIntensity == 3){
+                  Clean();
+                  Compo.SetupTotalFragmentation();              // TotalFragmentation
+              }
+
         }
 
         if (Input.GetKeyDown("q")) /////// Full Landscape
@@ -106,10 +104,6 @@ public class Render_Manager : MonoBehaviour
             Scene.TextPaeanApparition();
         }
 
-        if (Input.GetKeyDown("enter"))  /////// Just Clean
-        {
-            AssignScene = true;
-        }
 
         if (Input.GetKeyDown("space"))  /////// Just Clean
         {
