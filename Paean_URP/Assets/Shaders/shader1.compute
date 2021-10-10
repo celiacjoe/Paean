@@ -3,6 +3,7 @@
 RWTexture2D<float4> reader;
 Texture2D<float4> texture0;
 Texture2D<float4> texture1;
+TextureCube<float4> ref;
 SamplerState _LinearRepeat;
 float _time;
 int _rx;
@@ -23,7 +24,7 @@ float2x2 rot(float r) { float c = cos(r); float s = sin(r); return float2x2(c, s
 float map(float3 p) {
 	float d1 = 1000.;
 	if (p.y < 5.) {
-		d1 = dot(p, float3(0., 1., 0.)) + texture1.SampleLevel(_LinearRepeat, p.xz*0.01,0).x*8. + texture1.SampleLevel(_LinearRepeat, p.xz*0.1, 0).x*0.8;
+		d1 = dot(p, float3(0., 1., 0.)) + texture1.SampleLevel(_LinearRepeat, p.xz*0.01,0).x*10. + texture1.SampleLevel(_LinearRepeat, p.xz*0.1, 0).x;
 	}
 	return d1;
 }
@@ -52,10 +53,15 @@ void CSMain (uint2 id : SV_DispatchThreadID)
 	float s = smoothstep(dm, 0., dd);
 	float3 n = nor(p);
 	float ld = clamp(dot(n, -r), 0., 1.);
-	float t0 = texture0.SampleLevel(_LinearRepeat, p.xz*0.1,0.).x;
+	float t0 = texture0.SampleLevel(_LinearRepeat, p.xz*0.1 + 0.5 / res,0.).x;
 	float t1 = smoothstep(.4, 0., t0);
 	float t2 = t0;
-	float fres = pow(1. - ld, lerp(0., 10., t2))*pow(t2, 0.8);
-	reader[id]=float4(fres,fres,fres,1.) ;
+	float fres = pow(1. - ld, lerp(5., 10., t2))*pow(t2, 0.8);
+	float dao = 1.;
+	float ao = clamp(map(p + n * dao) / dao, 0., 1.);
+	fres *= ao;
+	float r1 = smoothstep(-0.05,0.8,sqrt(fres));
+	float3 r2 = ref.SampleLevel(_LinearRepeat, n, 0).xyz;
+	reader[id] = float4(max(r2,float3(r1,r1,r1)),1.);
 
 }
